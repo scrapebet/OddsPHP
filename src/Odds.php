@@ -160,8 +160,11 @@ class Odds{
 		return (float)round($this->decimal_to_moneyline($this->decimal));
 	}
 	public function get_fractional(){
-        $this->odd_not_set_exception();
-		return (string)$this->decimal_to_fraction($this->decimal);
+		$this->odd_not_set_exception();
+		if(is_string($this->decimal)){
+			return (string)$this->decimal_to_fraction($this->decimal);
+		}
+		return "";
 	}
 	public function get_implied_probability(){
         $this->odd_not_set_exception();
