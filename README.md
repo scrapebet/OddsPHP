@@ -1,4 +1,4 @@
-![License](https://img.shields.io/github/license/jsaguilera12/OddsConverterTools)
+![License](https://img.shields.io/github/license/jsgm/OddsPHP)
 
 # OddsPHP
 OddsPHP is a lightweight library to easily work with odds conversions and calculations.
