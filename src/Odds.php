@@ -141,7 +141,7 @@ class Odds{
 		}else{
 			throw new \Exception('Please provide a valid odd and type.');
 		}
-		return $this;
+		return ""; // Null result.
 	}
 
 	private function odd_not_set_exception(){
