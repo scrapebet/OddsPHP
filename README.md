@@ -31,13 +31,17 @@ Check the **/test** folder to find a few examples to convert and manipulate odds
 ### 1.1 Convert odds between formats
 Convert odds between different types of formats. If the given odd is not valid it will throw an exception.
 ```php
-// Converting decimal (5.50) to fractional (9/2).
+// Converting decimal to fractional.
 $odd = new  Odds();
-echo  $odd->set('decimal', 5.50)->get('fractional'); // 9.2
+echo  $odd->set('decimal', 5.50)->get('fractional'); // "string" 9/2
 
-// Converting fractional (11/25) to moneyline.
+// Converting fractionalto moneyline.
 $odd = new  Odds();
-echo  $odd->set('fractional', '11/25')->get('moneyline');
+echo  $odd->set('fractional', '11/25')->get('moneyline'); // "float" -227
+
+// Converting fractional to implied probability.
+$odd = new  Odds();
+echo  $odd->set('fractional', '44/100')->get('implied'); // "string" 69.44
 ```
 Allowed formats are:
 
@@ -49,7 +53,8 @@ Allowed formats are:
 ### 1.2 Reduce to the lowest term a fractional odd
 Bookmarkers use the simplest form of a fraction. If we provide to the Odds class a fraction which is not reduced it will automatically reduce it for you as shown here:
 ```php
-print $odd->set('fractional', '44/100')->get('fractional'); // 11/25
+print $odd->set('fractional', '44/100')->reduce(); // "string" 11/25
+print $odd->set('fractional', '44/100')->get('fractional'); // "string" 11/25
 ```
 
 ### 1.3 Set decimal and percentage precision
@@ -57,11 +62,11 @@ By default, all decimal odds and percentages will be returned with 2 decimals. Y
 ```php
 $odd = new Odds();
 $odd->set_precision(1);
-$odd->set('decimal', 1.29)->get('decimal'); // 1.3
+$odd->set('decimal', 1.29)->get('decimal'); // "float" 1.3
 
 
 $odd->set_precision(2);
-$odd->set('decimal', '1,800.00')->get('decimal'); // 1800.00
+$odd->set('decimal', '1,800.00')->get('decimal'); // "float" 1800.00
 ```
 
 ## 2. Creating a group of odds
@@ -76,7 +81,7 @@ $group = new Odds()->add('decimal', 5.50)->add('decimal', 1.38)->add('decimal', 
 ```
 ### 2.1 Calculate possible profit
 ```php
-// How much we could win on a co
+// How much we could win on a bet:
 print $group->calculate(15);
 ```
 ### 2.2 Getting payouts and overrounds
@@ -95,15 +100,15 @@ If we sum all of them we will have a remaining percentage, that's the overround.
 ```php
 // [18.18 + 68.03 + 16.67] = 102.88
 // 102.88 - 100 = Overround
-print  array_sum($payout->get_implied_probabilities()); // 102.88
-print  $payout->get_overround(); // 2.88
+print  array_sum($payout->get_implied_probabilities()); // "float" 102.88
+print  $payout->get_overround(); // "float" 2.88
 ```
 
 We may get at some point a negative result for the overround. That means we have found a surebet!
 
 To get the payout, we simply subtract the overround to 100. This can be done using the following function:
 ```php
-print  $payout->get_payout(); // 97.12
+print  $payout->get_payout(); // "float" 97.12
 ```
 
 ### 2.3 Calculate the real probabilities

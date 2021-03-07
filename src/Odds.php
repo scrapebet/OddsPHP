@@ -42,6 +42,7 @@ class Odds{
             $this->precision = (int)$precision;
 		}
 	}
+
     public function get_current_precision(){
         return $this->precision;
     }
@@ -69,7 +70,7 @@ class Odds{
 					return $this->set_implied($odd);
 				break;
 				default:
-					throw new \Exception('Please provide a correct type for set, allowed are: \'decimal\', \'fractional\' or \'moneyline\'.');
+					throw new \Exception('Please provide a correct type for set, allowed are: \'decimal\', \'fractional\', \'moneyline\' or \'implied\'.');
 				break;
 			endswitch;
 		}else{
@@ -77,6 +78,7 @@ class Odds{
 		}
 		return $this;
     }
+
     public function set_decimal($odd=NULL){
         if($odd>NULL && $this->is_decimal($odd)){
             $this->decimal = $odd;
@@ -85,6 +87,7 @@ class Odds{
 		}
 		return $this;
     }
+
     public function set_fractional($odd=NULL){
         if($odd>NULL && $this->is_fractional($odd)){
             $this->decimal=$this->fractional_to_decimal($odd);
@@ -93,6 +96,7 @@ class Odds{
 		}
 		return $this;
     }
+
     public function set_moneyline($odd=NULL){
         if($odd>NULL && $this->is_moneyline($odd)){
             $this->decimal=$this->moneyline_to_decimal($odd);
@@ -101,9 +105,10 @@ class Odds{
 		}
 		return $this;
 	}
+
 	public function set_implied($odd){
 		if($odd>null){
-
+            $this->decimal=$this->moneyline_to_decimal($odd);
 		}
 		return $this;
 	}
@@ -142,6 +147,10 @@ class Odds{
 			throw new \Exception('Please provide a valid odd and type.');
 		}
 		return ""; // Null result.
+	}
+
+	public function reduce(){
+		return $this->get(self::FRACTIONAL);
 	}
 
 	private function odd_not_set_exception(){
