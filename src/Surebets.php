@@ -10,28 +10,13 @@
 
 namespace OddsPHP;
 
-class Surebets{
-    private $is_surebet=false;
-    public function __construct($odds=null){
-        if($odds>null && is_array($odds)){
-            $this->set($odds);
-        }
-    }
-    public function set($odds){
-        $payouts = new Payouts($odds);
-        if($payouts->get_overround() < 0){
-            $this->is_surebet=true;
-        }else{
-            $this->is_surebet=false;
-        }
-    }
-
+class Surebets extends Payouts{
     public function is_surebet(){
-        return $this->is_surebet;
+        return ($this->get_overround()<0);
     }
 
-    public function profit(){
-        
+    public function profit(): float{
+        return 0.0;
     }
 }
 ?>

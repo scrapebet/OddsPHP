@@ -4,7 +4,7 @@
  * @author    Github @jsgm
  * @license   MIT
  * @since     08-02-2020
- * @updated   14-05-2020
+ * @updated   07-06-2021
  *
  */
 
@@ -15,34 +15,38 @@ class Payouts{
 	private $probs=[];
 	private $precision=2;
     
-	public function __construct($odds=null){
-        $precision = new Odds();
-        $this->precision = $precision->get_current_precision();
-        unset($precision);
-        
-		if($odds>null && is_array($odds)){
-			foreach($odds as $odd){
-                if(is_object($odd)){
-                    array_push($this->odds, $odd->get('decimal'));
-                }else{
-                    $odd = new Odds($odd);
-                    array_push($this->odds, $odd->get_decimal());
-                    array_push($this->probs, $odd->get_implied_probability());
-                }
+	public function __construct($group=null){
+        $odds = new Odds();
+        if($group>null && is_array($group)){
+
+            foreach($group as $odd){
+                // Odd array must have the following format: ['format', 'odd']
+                if(count($odd)!=2) continue;
+
+                // The odd format is not valid.
+                if(!$odds->is_valid_format($odd[0])) continue;
+
+                $odd = $odds->set($odd[0], $odd[1]);
+                array_push($this->probs, $odd->get('implied'));
+                array_push($this->odds, $odd->get('decimal'));
             }
-		}else{
-            throw new Exception('Given odds must be an array.');
+        }else{
+            throw new \Exception('Given odds must be an array.');
         }
 	}
+
     public function get_implied_probabilities(){
         return $this->probs;
     }
+
     public function get_payout(){
         return abs(100-$this->get_overround());
     }
+    
     public function get_overround(){
         return number_format(array_sum($this->probs)-100, $this->precision);
     }
+
     public function get_real_probabilities(){
         $probabilities = [];
         foreach($this->odds as $odd){

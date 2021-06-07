@@ -288,9 +288,14 @@ class Odds{
 	 *
 	 *
 	 */
+	public function is_valid_format($format=NULL): bool{
+		return (is_string($format) && ($format===$this::DECIMAL || $format===$this::FRACTIONAL || $format===$this::MONEYLINE || $format===$this::IMPLIED));
+	}
+
 	private function is_numeric($value){
 		return preg_match('/^[0-9]+$/i', $value);
 	}
+	
 	private function parse_float($value=0.0){
 		return floatval(preg_replace('/\.(?=.*\.)/', '', str_replace(",", ".", $value)));
 	}
