@@ -1,4 +1,4 @@
-name: PHP Lint
+name: Building
 on:
   push:
     branches: [ master ]
