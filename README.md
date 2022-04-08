@@ -1,4 +1,4 @@
-![License](https://img.shields.io/github/license/jsgm/OddsPHP)
+![Building](https://github.com/jsgm/OddsPHP/actions/workflows/phplint.yml/badge.svg) ![License](https://img.shields.io/github/license/jsgm/OddsPHP)
 
 # OddsPHP
 OddsPHP is a lightweight library to easily work with odds conversions and calculations.
