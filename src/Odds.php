@@ -18,6 +18,9 @@ class Odds{
 	const FRACTIONAL = 'fractional';
 	const MONEYLINE = 'moneyline';
 	const IMPLIED = 'implied';
+	const HONGKONG = 'hongkong';
+	const MALAY = 'malay';
+	const INDONESIAN = 'indonesian';
 
   	/*
 	 *
