@@ -45,12 +45,15 @@ echo  $odd->set('fractional', '11/25')->get('moneyline'); // "float" -227
 $odd = new  Odds();
 echo  $odd->set('fractional', '44/100')->get('implied'); // "string" 69.44
 ```
-Allowed formats are:
+**Allowed formats are:**
 
  - 'decimal'
  - 'fractional'
  - 'implied'
  - 'moneyline'
+ - 'hongkong'
+ - 'malay'
+ - 'indonesian'
 
 ### 1.2 Reduce to the lowest term a fractional odd
 Reduce a fraction with the **reduce()** method or just pass any fraction and it will automatically reduce it for you as shown here:
