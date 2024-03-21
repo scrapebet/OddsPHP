@@ -12,7 +12,7 @@ With a few lines of code you'll be able to:
 ## Installation
 Clone the repository or just download the files:
 ```
-git clone https://github.com/jsgm/OddsPHP.git
+git clone https://github.com/scrapebet/OddsPHP.git
 ```
 
 At the top of your PHP file, add the classes you need in the following order:
